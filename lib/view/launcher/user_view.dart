@@ -28,6 +28,10 @@ class _UserViewState extends State<UserView>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
+    var tween = Tween<double>(begin: 1.0, end: 0.9);
+    var curvedAnimation =
+        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut);
+    _animation = tween.animate(curvedAnimation);
   }
 
   onTapUserAnimate() {
@@ -63,7 +67,7 @@ class _UserViewState extends State<UserView>
               style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
-                  color: Colors.black),
+                  color: Colors.white),
             )
           ],
         ),
