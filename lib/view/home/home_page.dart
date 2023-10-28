@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:netflix_clone/common/colors.dart';
 import 'package:netflix_clone/common/dump_data.dart';
+import 'package:netflix_clone/view/home/continue_watch_card.dart';
 import 'package:netflix_clone/view/home/home_page_watch_list.dart';
 
 class HomePage extends StatefulWidget {
@@ -135,11 +136,51 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           height: 200,
                           decoration: BoxDecoration(
-                              //TODO
-                              ),
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),
+                            ),
+                            gradient: LinearGradient(
+                              colors: [Colors.transparent, snapshot.data!],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
                         ),
                       ),
-                    )
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 70,
+                          child: Column(
+                            children: [
+                              const Text(
+                                "Drama",
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    panoButton("Oynat", "play.png", 0xffffffff,
+                                        0xff000000),
+                                    panoButton("Listem", "plus.png", 0xff253737,
+                                        0xffffffff)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -150,5 +191,65 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  continueWatching() {}
+  Widget panoButton(
+      String buttonText, String image, int bgColor, int titleTextColor) {
+    return Expanded(
+      child: Container(
+        height: double.infinity,
+        margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(5)),
+            color: Color(bgColor)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset("assets/$image", width: 15, height: 15),
+            const SizedBox(width: 10),
+            Text(
+              buttonText,
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Color(titleTextColor)),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget continueWatching() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      color: Colors.black,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 9),
+            child: Text(
+              "Continue Watching",
+              textDirection: TextDirection.ltr,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                backgroundColor: Colors.black,
+              ),
+            ),
+          ),
+          Container(
+            height: 180.sp,
+            color: Colors.black,
+            child: ListView.separated(
+              itemBuilder: (context, index) =>
+                  ContinueWatchCard(image: DumpData.continueWatchList[index]),
+              separatorBuilder: (context, index) => SizedBox(width: 16.sp),
+              itemCount: 4,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
