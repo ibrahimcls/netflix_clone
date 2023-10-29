@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/$image", width: 15, height: 15),
+            Image.asset("assets/icons/$image", width: 15, height: 15),
             const SizedBox(width: 10),
             Text(
               buttonText,
